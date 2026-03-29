@@ -1,0 +1,108 @@
+/**
+ * AG Grid Theme - Design System Aligned
+ * Uses CSS custom properties from theme/mui-theme.ts
+ * Supports light/dark mode via data-theme attribute
+ */
+
+.gridContainer {
+  /* Light mode (default) */
+  --ag-background-color: var(--surface-paper);
+  --ag-foreground-color: var(--color-text-primary);
+  --ag-border-color: var(--color-border);
+  --ag-header-background-color: var(--color-neutral-50);
+  --ag-header-foreground-color: var(--color-primary);
+  --ag-row-hover-color: var(--color-primary-50);
+  --ag-selected-row-background-color: var(--color-primary-100);
+  --ag-font-family: 'Outfit', sans-serif;
+  --ag-row-border-color: var(--color-border-light);
+  --ag-odd-row-background-color: var(--color-neutral-50);
+
+  /* Border and shadow */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .gridContainer {
+  --ag-background-color: var(--surface-paper);
+  --ag-foreground-color: var(--color-text-primary);
+  --ag-border-color: var(--color-border);
+  --ag-header-background-color: var(--surface-elevated);
+  --ag-header-foreground-color: var(--color-primary-400);
+  --ag-row-hover-color: rgba(4, 120, 87, 0.15);
+  --ag-selected-row-background-color: rgba(4, 120, 87, 0.2);
+  --ag-row-border-color: var(--color-border);
+  --ag-odd-row-background-color: var(--surface-elevated);
+}
+
+/* Header styling */
+.gridContainer :global(.ag-header) {
+  background-color: var(--ag-header-background-color);
+  border-bottom: 1px solid var(--ag-border-color);
+}
+
+.gridContainer :global(.ag-header-cell-text) {
+  font-weight: 600;
+  color: var(--ag-header-foreground-color);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+/* Row styling */
+.gridContainer :global(.ag-row) {
+  border-bottom: 1px solid var(--ag-row-border-color);
+}
+
+.gridContainer :global(.ag-row-hover) {
+  background-color: var(--ag-row-hover-color);
+}
+
+.gridContainer :global(.ag-row-selected) {
+  background-color: var(--ag-selected-row-background-color);
+}
+
+/* Cell styling */
+.gridContainer :global(.ag-cell) {
+  color: var(--ag-foreground-color);
+}
+
+/* Text overflow handling */
+.gridContainer :global(.ag-cell) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Allow wrapping for error column */
+.gridContainer :global(.ag-cell.wrap-text) {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Long content handling */
+.gridContainer :global(.ag-cell-value) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Error cell styling */
+.gridContainer :global(.ag-cell.error-cell) {
+  color: var(--color-error-main);
+  background-color: var(--color-error-light);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+}
+
+/* Empty state styling */
+.gridContainer:empty::before {
+  content: 'No data to display';
+  display: block;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+}

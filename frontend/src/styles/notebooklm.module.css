@@ -1,0 +1,290 @@
+/**
+ * NotebookLM Visual Polish - Panel Card Styles
+ * Uses design tokens from theme/mui-theme.ts
+ *
+ * Floating white cards on grey canvas
+ * All panels share same card treatment for visual consistency
+ */
+
+/* Panel card base - shared by all three panels */
+.panelCard {
+  background-color: var(--surface-paper);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color var(--transition-slow);
+}
+
+/* Minimal hover - panels are containers, not interactive elements */
+.panelCard:hover {
+  border-color: var(--color-neutral-200);
+}
+
+/* Panel header styling */
+.panelHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.panelTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  letter-spacing: 0.01em;
+}
+
+/* Panel content area with scrolling */
+.panelContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Smooth scroll for keyboard/programmatic navigation */
+  scroll-behavior: smooth;
+  /* Contain scroll within panel */
+  overscroll-behavior: contain;
+}
+
+/* Scrollable areas within panels */
+.scrollArea {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Ensure center panel scrolls content independently */
+.centerPanelScroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Specific card hovers for DataPanel */
+.inputCard {
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.inputCard:hover {
+  background-color: var(--color-neutral-100);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.mappingCard {
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.mappingCard:hover {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary);
+}
+
+/* Collapsed panel strip */
+.collapsedStrip {
+  background-color: var(--surface-paper);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  min-width: 40px;
+  max-width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast);
+}
+
+.collapsedStrip:hover {
+  background-color: var(--color-neutral-100);
+}
+
+/* Collapse/expand button styling */
+.collapseButton {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.collapseButton:hover {
+  color: var(--color-text-primary);
+}
+
+/* Three-panel container with gaps */
+.threePanelContainer {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  padding: 16px;
+  background-color: var(--surface-canvas);
+}
+
+/* Center panel - main workspace */
+.centerPanel {
+  flex: 1;
+  min-width: 0; /* Allow shrinking below 600px */
+}
+
+/* Side panels - fluid sizing with clamp() */
+.sidePanel {
+  width: clamp(200px, 22vw, 340px);
+  min-width: 200px;
+  max-width: 500px;
+}
+
+/* ========== Responsive Breakpoints ========== */
+
+/* Tablet: 768px - 1280px */
+@media (max-width: 1280px) {
+  .threePanelContainer {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .sidePanel {
+    width: 280px;
+    min-width: 180px;
+    max-width: 320px;
+  }
+
+  .centerPanel {
+    min-width: 0;
+  }
+
+  .panelCard {
+    border-radius: 20px;
+  }
+
+  .leftPanelTablet {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+  }
+
+  .panelHeader {
+    padding: 10px 12px;
+  }
+}
+
+/* Mobile: < 768px - Stack vertically */
+@media (max-width: 768px) {
+  .threePanelContainer {
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+    height: auto;
+    min-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .sidePanel {
+    width: 100%;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .leftPanelMobile {
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  .rightPanelMobile {
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  .expanded {
+    max-height: none !important;
+    flex: 1;
+  }
+
+  .panelCard {
+    border-radius: var(--radius-lg);
+    height: auto;
+    min-height: 60px;
+  }
+
+  .panelHeader {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .panelTitle {
+    font-size: 0.875rem;
+  }
+
+  .panelContent {
+    max-height: 400px;
+  }
+}
+
+/* Small mobile: < 480px */
+@media (max-width: 480px) {
+  .threePanelContainer {
+    padding: 4px;
+    gap: 8px;
+  }
+
+  .panelCard {
+    border-radius: var(--radius-md);
+  }
+
+  .centerPanel {
+    min-height: 300px;
+  }
+
+  .leftPanelMobile,
+  .rightPanelMobile {
+    max-height: 150px;
+  }
+}
+
+/* Mobile panel drawer styles */
+.mobileDrawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-paper);
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-sticky);
+  transform: translateY(calc(100% - 48px));
+  transition: transform var(--transition-slow);
+}
+
+.mobileDrawer.open {
+  transform: translateY(0);
+}
+
+.mobileDrawerHandle {
+  width: 40px;
+  height: 4px;
+  background: var(--color-neutral-300);
+  border-radius: 2px;
+  margin: 8px auto;
+}
+
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .threePanelContainer {
+    flex-direction: row;
+    padding: 8px;
+  }
+
+  .sidePanel {
+    width: 30%;
+    max-width: 200px;
+  }
+}
+
+/* Split Pane Resizer */
+/* Note: Resizer styling is handled by MUI's styled system in MuiPanelResizer.tsx */
+/* The resizer-line class is styled via MUI's theme, not CSS modules */

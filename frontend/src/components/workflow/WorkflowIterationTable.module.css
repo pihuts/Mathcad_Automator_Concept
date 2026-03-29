@@ -1,0 +1,58 @@
+.gridContainer {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--surface-paper);
+}
+
+.gridContainer :global(.ag-header) {
+  background: linear-gradient(180deg, var(--color-primary-50) 0%, color-mix(in oklab, var(--color-primary-50) 60%, var(--surface-paper)) 100%);
+  border-bottom: 2px solid var(--color-primary-200);
+}
+
+.gridContainer :global(.ag-header-cell-text) {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-weight: 700;
+  color: var(--color-primary-700);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.gridContainer :global(.ag-row-even) {
+  background-color: var(--surface-paper);
+}
+
+.gridContainer :global(.ag-row-odd) {
+  background-color: var(--color-neutral-50);
+}
+
+.gridContainer :global(.ag-row-hover) {
+  background-color: var(--alpha-primary-10);
+}
+
+.gridContainer :global(.ag-cell) {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 0.85rem;
+}
+
+.monoCell {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+.errorCell {
+  color: var(--color-error-dark);
+  font-weight: 600;
+}
+
+.gridContainer :global(.ag-row.clickableRow) {
+  cursor: pointer;
+}

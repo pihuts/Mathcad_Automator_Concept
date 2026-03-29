@@ -1,0 +1,140 @@
+/**
+ * Bento-box grid layout styles for right panel
+ * Uses design tokens from theme/mui-theme.ts
+ *
+ * Features:
+ * - 2-column CSS Grid layout
+ * - Light pastel background variants
+ * - Subtle shadows and borders
+ */
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+}
+
+.bentoCard {
+  background: var(--surface-paper);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.bentoCard:hover {
+  border-color: var(--color-neutral-300);
+  background: var(--color-neutral-50);
+}
+
+.bentoCardLarge {
+  grid-column: span 2;
+}
+
+/* Pastel background variants - using design tokens */
+.bentoCardBlue {
+  background: var(--color-accent-50);
+  border-color: var(--color-accent-100);
+}
+
+.bentoCardBlue:hover {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-200);
+}
+
+.bentoCardGreen {
+  background: var(--color-success-light);
+  border-color: var(--color-success-border);
+}
+
+.bentoCardGreen:hover {
+  background: var(--color-success-hoverLight);
+  border-color: var(--color-success-hoverBorder);
+}
+
+.bentoCardPurple {
+  background: var(--color-info-light);
+  border-color: var(--color-info-border);
+}
+
+.bentoCardPurple:hover {
+  background: var(--color-info-hoverLight);
+  border-color: var(--color-info-hoverBorder);
+}
+
+.bentoCardAmber {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning-border);
+}
+.bentoCardAmber:hover {
+  background: var(--color-warning-hoverLight);
+  border-color: var(--color-warning-hoverBorder);
+}
+
+.bentoCardCyan {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-200);
+}
+
+.bentoCardCyan:hover {
+  background: var(--color-accent-200);
+  border-color: var(--color-accent-300);
+}
+
+.bentoCardRed {
+  background: var(--color-error-light);
+  border-color: var(--color-error-border);
+}
+
+.bentoCardRed:hover {
+  background: var(--color-error-hoverLight);
+  border-color: var(--color-error-hoverBorder);
+}
+
+/* Card content typography */
+.cardIcon {
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.cardValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.cardSubtext {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive: single column on smaller screens */
+@media (max-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .bentoCard {
+    min-height: 80px;
+    padding: 12px;
+  }
+
+  .bentoCardLarge {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,59 @@
+.container {
+  margin-top: 8px;
+  padding-bottom: 96px;
+}
+
+.stepSection {
+  border: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: var(--surface-paper);
+  scroll-margin-top: 84px;
+  transition: all 200ms ease;
+}
+
+.stepSection:hover {
+  border-left-color: var(--color-primary-300);
+}
+
+.stepSectionActive {
+  border-left-color: var(--color-primary-600);
+  border-color: var(--color-primary-300);
+  box-shadow: 0 4px 12px var(--alpha-primary-15);
+}
+
+.stepTitle {
+  font-weight: 700;
+  font-family: 'Outfit', system-ui, sans-serif;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.tableCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  background: var(--color-neutral-50);
+}
+
+.tableName {
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--color-primary-700);
+}
+
+.grid {
+  width: 100%;
+}
+
+.numericCell {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+}

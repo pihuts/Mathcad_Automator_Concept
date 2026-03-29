@@ -1,0 +1,47 @@
+/**
+ * DEPRECATED: Use tokens from theme/mui-theme.ts instead
+ *
+ * This file is kept for backwards compatibility during migration.
+ * All new styles should use:
+ *   - CSS custom properties (--color-*, --surface-*, etc.)
+ *   - Direct imports from theme/mui-theme.ts
+ *
+ * See theme/mui-theme.ts for the single source of truth.
+ */
+
+:root {
+  /* Legacy aliases - map to new tokens */
+  /* These will be removed once migration is complete */
+
+  /* Canvas & Surfaces */
+  --canvas-bg: var(--surface-canvas);
+  --surface-white: var(--surface-paper);
+  --surface-hover: var(--color-neutral-100);
+  --surface-press: var(--color-neutral-200);
+
+  /* Text Colors */
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+
+  /* Accent Colors (legacy naming) */
+  --accent-blue: var(--color-primary);
+  --accent-blue-light: var(--color-primary-50);
+  --accent-blue-dark: var(--color-primary-800);
+  --accent-cyan: var(--color-primary); /* Alias for migration */
+
+  /* Border Colors */
+  --border-light: var(--color-border-light);
+  --border-accent: var(--color-primary);
+
+  /* Status Colors */
+  --status-success: var(--color-success-main);
+  --status-warning: var(--color-warning-main);
+  --status-error: var(--color-error-main);
+
+  /* Spacing (8px base unit) */
+  --space-unit: 8px;
+
+  /* Border Radius */
+  --radius-lg: var(--radius-lg);
+  --radius-md: var(--radius-md);
+}

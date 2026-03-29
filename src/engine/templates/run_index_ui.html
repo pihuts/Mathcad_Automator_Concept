@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+    :root {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --surface-2: #EEF2FF;
+      --ink: #0F172A;
+      --muted: #475569;
+      --line: #E2E8F0;
+      --primary: #1E40AF;
+      --primary-2: #3B82F6;
+      --accent: #F59E0B;
+      --good: #16A34A;
+      --bad: #DC2626;
+      --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 500px at 10% -10%, #DBEAFE 0%, rgba(219, 234, 254, 0) 60%),
+                  radial-gradient(1000px 600px at 120% 0%, #E0F2FE 0%, rgba(224, 242, 254, 0) 55%),
+                  var(--bg);
+      color: var(--ink);
+      font-family: 'Fira Sans', system-ui, sans-serif;
+    }
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--primary);
+    }
+    .page-subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .summary {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 16px;
+      min-width: 140px;
+      box-shadow: var(--shadow);
+    }
+    .summary-card h3 {
+      margin: 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .summary-card p {
+      margin: 6px 0 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .controls {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .control {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .control input,
+    .control select {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      font-family: 'Fira Sans', system-ui, sans-serif;
+      font-size: 13px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .control input:focus,
+    .control select:focus {
+      outline: 2px solid rgba(59, 130, 246, 0.35);
+      border-color: var(--primary-2);
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0 10px;
+    }
+    .tab {
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--muted);
+      transition: all 0.2s ease;
+    }
+    .tab.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .view {
+      display: none;
+    }
+    .view.active {
+      display: block;
+    }
+    .table-wrap {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: auto;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 900px;
+      font-size: 13px;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #F1F5F9;
+      text-align: left;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 600;
+      color: #0F172A;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    tbody td {
+      border-bottom: 1px solid #EDF2F7;
+      padding: 10px 12px;
+      vertical-align: top;
+      color: var(--ink);
+    }
+    tbody tr:hover {
+      background: #EFF6FF;
+    }
+    .mono {
+      font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #E2E8F0;
+      color: #1E293B;
+    }
+    .chip.good { background: rgba(22, 163, 74, 0.15); color: var(--good); }
+    .chip.bad { background: rgba(220, 38, 38, 0.15); color: var(--bad); }
+    .chip.primary { background: rgba(30, 64, 175, 0.15); color: var(--primary); }
+    .chip.accent { background: rgba(245, 158, 11, 0.2); color: #92400E; }
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stack span {
+      display: block;
+      word-break: break-word;
+    }
+    .link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+    .group-card {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .group-title {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 16px;
+    }
+    .group-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .legacy-header { display: none; }
+    #run-index-table { display: none; }
+    @media (max-width: 900px) {
+      .page-title { font-size: 22px; }
+      table { min-width: 700px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title" id="page-title">Workflow Run Debugger</h1>
+        <p class="page-subtitle" id="page-subtitle">Organized per step inputs, conditions, and results for faster debugging.</p>
+        <div class="summary" id="summary"></div>
+      </div>
+      <div class="summary-card">
+        <h3>Run</h3>
+        <p id="run-name">-</p>
+      </div>
+    </header>
+    <section class="controls">
+      <label class="control">
+        Search
+        <input id="filter-search" type="text" placeholder="Search steps, inputs, conditions, outputs" />
+      </label>
+      <label class="control">
+        Iteration
+        <select id="filter-iteration">
+          <option value="">All iterations</option>
+        </select>
+      </label>
+      <label class="control">
+        Step type
+        <select id="filter-step-type">
+          <option value="">All types</option>
+        </select>
+      </label>
+      <label class="control">
+        Condition met
+        <select id="filter-condition">
+          <option value="">All</option>
+          <option value="True">True</option>
+          <option value="False">False</option>
+          <option value="Empty">Empty</option>
+        </select>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="filter-errors" />
+        Only errors
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="filter-pdf" />
+        Has PDF
+      </label>
+    </section>
+    <div class="tabs">
+      <button class="tab active" data-view="table-view">All Steps</button>
+      <button class="tab" data-view="grouped-view">Grouped by Iteration</button>
+    </div>
+    <section class="view active" id="table-view">
+      <div class="table-wrap">
+        <table id="normalized-table">
+          <thead>
+            <tr>
+              <th data-sort-key="iteration">Iteration</th>
+              <th data-sort-key="step">Step</th>
+              <th data-sort-key="type">Type</th>
+              <th data-sort-key="inputs">Inputs</th>
+              <th data-sort-key="conditions">Conditions</th>
+              <th data-sort-key="result">Result</th>
+              <th data-sort-key="artifacts">Artifacts</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="view" id="grouped-view">
+      <div id="grouped-container"></div>
+    </section>
+  </div>
+  <h1 class="legacy-header">{{WORKFLOW_NAME}} Run Index</h1>
+  <p class="legacy-header"><strong>Run:</strong> {{RUN_ID}}</p>
+  <table id="run-index-table">
+    <thead>
+      {{TABLE_HEADER}}
+    </thead>
+    <tbody>
+      {{TABLE_ROWS}}
+    </tbody>
+  </table>
+  <script>
+    (function () {
+      const legacyTable = document.getElementById('run-index-table');
+      if (!legacyTable) return;
+      const getText = (cell) => (cell?.getAttribute('data-sort-value') ?? cell?.innerText ?? '').trim();
+      const headers = Array.from(legacyTable.querySelectorAll('thead th')).map((th) => th.innerText.trim());
+      const columnIndex = (name) => headers.findIndex((h) => h === name);
+      const inputCols = headers
+        .map((h, idx) => (h.startsWith('Input:') ? { name: h.replace('Input:', '').trim(), idx } : null))
+        .filter(Boolean);
+      const outputCols = headers
+        .map((h, idx) => (h.startsWith('Output:') ? { name: h.replace('Output:', '').trim(), idx } : null))
+        .filter(Boolean);
+      const rows = Array.from(legacyTable.tBodies[0].rows);
+      const data = rows.map((row) => {
+        const cells = row.cells;
+        const iteration = getText(cells[columnIndex('Iteration')]);
+        const step = getText(cells[columnIndex('Step')]);
+        const type = getText(cells[columnIndex('Step Type')]);
+        const inputs = {};
+        inputCols.forEach(({ name, idx }) => {
+          const value = getText(cells[idx]);
+          if (value !== '') inputs[name] = value;
+        });
+        const outputs = {};
+        outputCols.forEach(({ name, idx }) => {
+          const value = getText(cells[idx]);
+          if (value !== '') outputs[name] = value;
+        });
+        const pdfCell = cells[columnIndex('PDF')];
+        const mcdxCell = cells[columnIndex('MCDX')];
+        const pdfLink = pdfCell?.querySelector('a')?.getAttribute('href') || '';
+        const mcdxLink = mcdxCell?.querySelector('a')?.getAttribute('href') || '';
+        return { iteration, step, type, inputs, outputs, pdfLink, mcdxLink };
+      });
+      const summaryEl = document.getElementById('summary');
+      const runNameEl = document.getElementById('run-name');
+      const pageTitleEl = document.getElementById('page-title');
+      const legacyRun = document.querySelector('p.legacy-header')?.innerText || '';
+      const runMatch = legacyRun.match(/Run:\s*(.*)$/i);
+      runNameEl.textContent = runMatch ? runMatch[1].trim() : 'Unknown';
+      const baseTitle = document.title.split(' - ')[0] || 'Workflow Run Debugger';
+      pageTitleEl.textContent = `${baseTitle} Debug View`;
+      const filters = {
+        search: document.getElementById('filter-search'),
+        iteration: document.getElementById('filter-iteration'),
+        stepType: document.getElementById('filter-step-type'),
+        condition: document.getElementById('filter-condition'),
+        errors: document.getElementById('filter-errors'),
+        pdf: document.getElementById('filter-pdf')
+      };
+      const normalize = (value) => String(value || '').toLowerCase();
+      const getConditionMet = (outputs) => {
+        if ('condition_met' in outputs) return outputs.condition_met;
+        if ('condition' in outputs) return outputs.condition;
+        return '';
+      };
+      const getConditionLabel = (outputs) => {
+        const detail = outputs.action_detail || outputs.detail || '';
+        const action = outputs.action_taken || outputs.action || '';
+        const met = getConditionMet(outputs);
+        return { detail, action, met };
+      };
+      const buildInputs = (inputs) => {
+        const entries = Object.entries(inputs);
+        if (!entries.length) return '<span class="mono">-</span>';
+        return entries.map(([k, v]) => `<span><span class="mono">${k}</span>: ${v}</span>`).join('');
+      };
+      const buildConditions = (outputs) => {
+        const { detail, action, met } = getConditionLabel(outputs);
+        const parts = [];
+        if (detail) parts.push(`<span>${detail}</span>`);
+        if (action) parts.push(`<span class="mono">Action: ${action}</span>`);
+        if (met !== '') {
+          const cls = String(met).toLowerCase() === 'true' ? 'good' : 'bad';
+          parts.push(`<span class="chip ${cls}">${met}</span>`);
+        }
+        if (!parts.length) return '<span class="mono">-</span>';
+        return parts.join('');
+      };
+      const buildArtifacts = (item) => {
+        const links = [];
+        if (item.pdfLink) links.push(`<a class="link" href="${item.pdfLink}">PDF</a>`);
+        if (item.mcdxLink) links.push(`<a class="link" href="${item.mcdxLink}">MCDX</a>`);
+        return links.length ? links.join(' ') : '<span class="mono">-</span>';
+      };
+      const getResultText = (outputs) => outputs.output || outputs.result || '';
+      const dataWithMeta = data.map((item) => {
+        const resultText = getResultText(item.outputs);
+        const condition = getConditionMet(item.outputs);
+        const searchBlob = normalize([
+          item.iteration,
+          item.step,
+          item.type,
+          JSON.stringify(item.inputs),
+          JSON.stringify(item.outputs)
+        ].join(' '));
+        return {
+          ...item,
+          resultText,
+          condition,
+          searchBlob,
+          hasError: normalize(resultText).includes('error') || normalize(item.outputs.action_detail || '').includes('error')
+        };
+      });
+      const iterationOptions = Array.from(new Set(dataWithMeta.map((d) => d.iteration))).sort();
+      iterationOptions.forEach((it) => {
+        const option = document.createElement('option');
+        option.value = it;
+        option.textContent = it;
+        filters.iteration.appendChild(option);
+      });
+      const typeOptions = Array.from(new Set(dataWithMeta.map((d) => d.type))).sort();
+      typeOptions.forEach((type) => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        filters.stepType.appendChild(option);
+      });
+      let sortState = { key: 'iteration', dir: 'asc' };
+      const applyFilters = () => {
+        const search = normalize(filters.search.value);
+        const iteration = filters.iteration.value;
+        const type = filters.stepType.value;
+        const condition = filters.condition.value;
+        const onlyErrors = filters.errors.checked;
+        const onlyPdf = filters.pdf.checked;
+        return dataWithMeta.filter((item) => {
+          if (search && !item.searchBlob.includes(search)) return false;
+          if (iteration && item.iteration !== iteration) return false;
+          if (type && item.type !== type) return false;
+          if (condition) {
+            if (condition === 'Empty' && item.condition !== '') return false;
+            if (condition !== 'Empty' && String(item.condition) !== condition) return false;
+          }
+          if (onlyErrors && !item.hasError) return false;
+          if (onlyPdf && !item.pdfLink) return false;
+          return true;
+        });
+      };
+      const sortData = (items) => {
+        const sorted = [...items];
+        const dir = sortState.dir === 'asc' ? 1 : -1;
+        sorted.sort((a, b) => {
+          let aVal = a[sortState.key] ?? '';
+          let bVal = b[sortState.key] ?? '';
+          if (sortState.key === 'inputs') {
+            aVal = JSON.stringify(a.inputs);
+            bVal = JSON.stringify(b.inputs);
+          }
+          if (sortState.key === 'conditions') {
+            aVal = JSON.stringify(a.outputs);
+            bVal = JSON.stringify(b.outputs);
+          }
+          if (sortState.key === 'result') {
+            aVal = a.resultText;
+            bVal = b.resultText;
+          }
+          return String(aVal).localeCompare(String(bVal)) * dir;
+        });
+        return sorted;
+      };
+      const renderSummary = (items) => {
+        const iterations = new Set(items.map((i) => i.iteration)).size;
+        const errors = items.filter((i) => i.hasError).length;
+        const pdfs = items.filter((i) => i.pdfLink).length;
+        summaryEl.innerHTML = '';
+        const cards = [
+          { label: 'Steps', value: items.length },
+          { label: 'Iterations', value: iterations },
+          { label: 'Errors', value: errors },
+          { label: 'PDFs', value: pdfs }
+        ];
+        cards.forEach((card) => {
+          const el = document.createElement('div');
+          el.className = 'summary-card';
+          el.innerHTML = `<h3>${card.label}</h3><p>${card.value}</p>`;
+          summaryEl.appendChild(el);
+        });
+      };
+      const renderTable = (items) => {
+        const tbody = document.querySelector('#normalized-table tbody');
+        tbody.innerHTML = '';
+        items.forEach((item) => {
+          const row = document.createElement('tr');
+          const typeChip = `<span class="chip primary">${item.type || '-'}</span>`;
+          const resultText = item.resultText || '-';
+          const resultChip = item.hasError
+            ? `<span class="chip bad">Error</span>`
+            : `<span class="chip good">OK</span>`;
+          row.innerHTML = `
+            <td class="mono">${item.iteration || '-'}</td>
+            <td class="mono">${item.step || '-'}</td>
+            <td>${typeChip}</td>
+            <td><div class="stack">${buildInputs(item.inputs)}</div></td>
+            <td><div class="stack">${buildConditions(item.outputs)}</div></td>
+            <td><div class="stack"><span>${resultText}</span>${item.resultText ? resultChip : ''}</div></td>
+            <td>${buildArtifacts(item)}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      };
+      const renderGrouped = (items) => {
+        const container = document.getElementById('grouped-container');
+        container.innerHTML = '';
+        const groups = {};
+        items.forEach((item) => {
+          groups[item.iteration] = groups[item.iteration] || [];
+          groups[item.iteration].push(item);
+        });
+        Object.keys(groups).sort().forEach((iteration) => {
+          const groupItems = groups[iteration];
+          const errors = groupItems.filter((i) => i.hasError).length;
+          const card = document.createElement('div');
+          card.className = 'group-card';
+          card.innerHTML = `
+            <div class="group-header">
+              <div class="group-title">${iteration}</div>
+              <div class="group-meta">
+                <span class="chip primary">Steps: ${groupItems.length}</span>
+                <span class="chip ${errors ? 'bad' : 'good'}">Errors: ${errors}</span>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Step</th>
+                    <th>Type</th>
+                    <th>Inputs</th>
+                    <th>Conditions</th>
+                    <th>Result</th>
+                    <th>Artifacts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${groupItems.map((item) => {
+                    const resultText = item.resultText || '-';
+                    const resultChip = item.hasError
+                      ? `<span class="chip bad">Error</span>`
+                      : `<span class="chip good">OK</span>`;
+                    return `
+                      <tr>
+                        <td class="mono">${item.step || '-'}</td>
+                        <td><span class="chip primary">${item.type || '-'}</span></td>
+                        <td><div class="stack">${buildInputs(item.inputs)}</div></td>
+                        <td><div class="stack">${buildConditions(item.outputs)}</div></td>
+                        <td><div class="stack"><span>${resultText}</span>${item.resultText ? resultChip : ''}</div></td>
+                        <td>${buildArtifacts(item)}</td>
+                      </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      };
+      const rerender = () => {
+        const filtered = applyFilters();
+        renderSummary(filtered);
+        const sorted = sortData(filtered);
+        renderTable(sorted);
+        renderGrouped(sorted);
+      };
+      document.querySelectorAll('#normalized-table thead th').forEach((th) => {
+        th.addEventListener('click', () => {
+          const key = th.getAttribute('data-sort-key');
+          if (!key) return;
+          if (sortState.key === key) {
+            sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortState.key = key;
+            sortState.dir = 'asc';
+          }
+          rerender();
+        });
+      });
+      Object.values(filters).forEach((el) => {
+        el.addEventListener('input', rerender);
+        el.addEventListener('change', rerender);
+      });
+      document.querySelectorAll('.tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
+          document.querySelectorAll('.view').forEach((v) => v.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.view).classList.add('active');
+        });
+      });
+      rerender();
+    })();
+  </script>
+</body>
+</html>

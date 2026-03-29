@@ -1,0 +1,188 @@
+.shellLayout {
+  --result-sticky-top: 64px;
+  display: flex;
+  min-height: 620px;
+  align-items: flex-start;
+  overflow: visible;
+}
+
+.sidebarRail {
+  position: sticky;
+  top: var(--result-sticky-top);
+  align-self: flex-start;
+  height: fit-content;
+  z-index: 6;
+  width: min(300px, 100%);
+  min-width: min(300px, 100%);
+  max-width: min(300px, 100%);
+  flex: 0 0 min(300px, 100%);
+  max-height: calc(100vh - 32px);
+  padding: 20px 16px;
+  border-right: 1px solid var(--color-border);
+  background: linear-gradient(180deg, var(--surface-paper) 0%, color-mix(in oklab, var(--color-primary-50) 40%, var(--surface-paper)) 100%);
+  overflow-y: auto;
+}
+
+.workspacePane {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+}
+
+.executionTableSticky {
+  position: sticky;
+  top: var(--result-sticky-top);
+  z-index: 5;
+  width: 100%;
+  background: transparent;
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+.runCard {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-transform: none;
+  color: var(--color-text-primary);
+  background-color: var(--surface-paper);
+  transition: all 200ms ease;
+}
+
+.runCard:hover {
+  border-left-color: var(--color-primary-400);
+  border-color: var(--color-primary-200);
+  background-color: var(--color-primary-50);
+  transform: translateX(2px);
+}
+
+.runCard:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-left-color: var(--color-primary-400);
+  border-color: var(--color-primary-200);
+  background-color: var(--color-primary-50);
+  transform: translateX(2px);
+}
+
+.runCardSelected {
+  border-left-color: var(--color-primary-600);
+  border-color: var(--color-primary-300);
+  background-color: color-mix(in oklab, var(--color-primary-100) 60%, var(--surface-paper));
+  box-shadow: 0 2px 8px var(--alpha-primary-15);
+}
+
+.runCardSelected:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.errorCodeBadge {
+  width: fit-content;
+  border: 1px solid var(--color-error-main);
+  color: var(--color-error-main);
+  background: color-mix(in oklab, var(--color-error-light) 80%, white);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.previewAlias {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.previewValue {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+}
+
+
+.kpiCard {
+  min-width: 120px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--surface-paper);
+}
+
+.kpiLabel {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.kpiValue {
+  font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+}
+
+.iterationBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--color-primary-100) 0%, var(--color-primary-50) 100%);
+  border: 1px solid var(--color-primary-200);
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: var(--font-size-badge, 0.75rem);
+  color: var(--color-primary-700);
+  letter-spacing: 0.02em;
+}
+
+.stepCountBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: var(--color-neutral-100);
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: var(--font-size-badge, 0.75rem);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 899px) {
+  .shellLayout {
+    display: block;
+    min-height: auto;
+  }
+
+  .sidebarRail {
+    position: static;
+    max-height: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--surface-paper);
+  }
+
+  .workspacePane {
+    padding-top: 16px;
+    padding: 16px;
+  }
+
+  .executionTableSticky {
+    position: static;
+  }
+
+}
